@@ -51,13 +51,12 @@ const ShowCourt = (props) => {
             ratingAverage = sumOfRatin/numOfRating
         }
     }
-    console.log(ratingAverage)
+    
     let reviewCards
     if (court) {
         if (court.review.length > 0) {
             reviewCards = court.review.map(review => (
                 <ShowReview
-                    ratingAverage={ratingAverage}
                     key={review.id} 
                     review={review}
                     user={user}
@@ -184,7 +183,7 @@ const ShowCourt = (props) => {
                         }
                     </Card.Footer>
                 </Card>
-                { reviewCards }
+                
                 </Col>
                 <Col>
                     <ShowMap court={court} />
@@ -195,6 +194,12 @@ const ShowCourt = (props) => {
                 <div className='container'>
                     Reviews: { reviewCards }                    
                 </div>
+            
+            <PictureModal 
+                show={pictureModalShow}
+                pictures={court.picture}
+                handleClose={() => setPictureModalShow(false)}
+            />
 
             <EditCourtModal 
                 user={user}
@@ -203,11 +208,11 @@ const ShowCourt = (props) => {
                 updateCourt={updateCourt}
                 msgAlert={msgAlert}
                 triggerRefresh={() => setUpdated(prev => !prev)}
-                
                 court={court}
                 />
 
              <NewReviewModal
+                ratingAverage={ratingAverage}
                 user={user}
                 court={court}
                 show={createModalShow}

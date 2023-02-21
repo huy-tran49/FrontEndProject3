@@ -3,11 +3,11 @@ import { Card, Button } from 'react-bootstrap'
 import { deleteReview } from '../../api/reviews'
 import EditReviewModal from './EditReviewModal'
 import Rating from '../shared/Rating'
-import { ShowRating } from '../shared/ShowRating'
+
 
 const ShowReview = (props) => {
-    const { review, user, court, msgAlert, triggerRefresh, ratingAverage } = props
-    console.log(ratingAverage)
+    const { review, user, court, msgAlert, triggerRefresh } = props
+    
     // here's our hook to display the EditreviewModal
     const [editModalShow, setEditModalShow] = useState(false)
     // console.log('this is the review in showreview', review)
