@@ -6,6 +6,10 @@ import SearchBar from '../shared/SearchBar'
 import { dist } from '../shared/Distance'
 import Rating from '../shared/Rating'
 import { ShowRating } from '../shared/ShowRating'
+=======
+
+
+>>>>>>> 1ce4569231e5950d4e2439786ad994166cfd1d8b
 // api function from our api file
 import { getAllCourts } from '../../api/courts'
 
@@ -142,9 +146,7 @@ const CourtsIndex = (props) => {
         }
         )
         })
-        console.log('these are the court distances', courtDist)
         let courty = courtDist.sort((a,b) => (a.milesAway > b.milesAway) ? 1 : -1)
-        console.log('these are the court distances sorted', courty)
         courtCards = courtDist.map(court => {
 
             let ratingAverage = 0
@@ -159,9 +161,6 @@ const CourtsIndex = (props) => {
             }
 
             const distance = dist(lat, court.theCourt.latitude, lng, court.theCourt.longitude)
-            console.log(`${distance} miles away`)
-            console.log('this is court.latitude', court.theCourt.latitude)
-            console.log('this is the lat from state', lat)
             if (court.milesAway<= distanceFilter) {
                 return (
                 <Card key={ court.theCourt._id } style={{ width: '100%', margin: 0 }}>
@@ -190,40 +189,7 @@ const CourtsIndex = (props) => {
         })
     }
     getCourtDist()
-    // once we have an array of courts, loop over them
-    // produce one card for every court
-    // const courtCards = courts.map(court => {
-    //     const distance = dist(lat, court.latitude, lng, court.longitude)
-    //     console.log(`${distance} miles away`)
-    //     console.log('this is court.latitude', court.latitude)
-    //     console.log('this is the lat from state', lat)
-    //     return (
-    //     <Card key={ court._id } style={{ width: '100%', margin: 0 }}>
-    //         <Card.Header style={{ backgroundColor: '#FC9047'}}><h5>{ court.name }</h5></Card.Header>
-    //         <Card.Body>
-    //             <Card.Text >
-    //                 {court.location}
-    //             </Card.Text>
-    //             <Card.Text>
-    //                 Court Rating:
-    //                 <Rating />
-    //             </Card.Text>
-    //             <Card.Text>
-    //                 { distance.toFixed(2) } Miles Away
-    //             </Card.Text>
-    //             {/* <Card.Text> (when ratings are setup)
-    //                 {court.rating}
-    //             </Card.Text> */}
-    //             <Card.Text>
-    //                 <Link to={`/courts/${court._id}`} className="orange-link">View { court.name }</Link>
-    //             </Card.Text>
-    //         </Card.Body>
-    //     </Card>
-    //     )
-    // })
-    // console.log('these are the court cards', courtCards)
 
-    // return some jsx
     return (
         <> 
             <div className='container-lg p-4'>

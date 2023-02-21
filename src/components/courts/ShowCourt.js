@@ -9,7 +9,7 @@ import LoadingScreen from '../shared/LoadingScreen'
 import ShowReview from '../reviews/ShowReview'
 import NewReviewModal from '../reviews/NewReviewModal'
 import EditCourtModal from './UpdateCourt'
-import Mapping from '../../api/map'
+import IndexMap from '../maps/IndexMap'
 import ShowMap from '../maps/ShowMap'
 import UploadWidget from '../shared/UploadWidget'
 import Rating from '../shared/Rating'
@@ -55,6 +55,7 @@ const ShowCourt = (props) => {
     let reviewCards
     if (court) {
         if (court.review.length > 0) {
+            console.log('this is court.review', court.review)
             reviewCards = court.review.map(review => (
                 <ShowReview
                     key={review.id} 
@@ -79,12 +80,12 @@ const ShowCourt = (props) => {
             <Container className="m-2">
                 <Row>
                 <Col>
-                <Card>
+                <Card style={{ height: '100%'}}>
                 <Card.Header style={{ backgroundColor: '#FC9047'}}><h5>{ court.name }</h5></Card.Header>
 
                     <Card.Body>
                             <Row>
-                                <Col>
+                                
                                     
                                 <Card.Text>
                                  
@@ -118,18 +119,18 @@ const ShowCourt = (props) => {
                                     </div>
                                     <div>
                                         <small>
-                                            Lights: { court.hasLight ? 'yes' : 'no' }
+                                            Lights: { court.hasLight ? 'Yes' : 'No' }
                                         </small>
                                     </div>
                                     <div>
                                         <small>
-                                            Does the hoops have nets? { court.nets ? 'yes' : 'no' }
+                                            Do the hoops have nets? { court.nets ? 'Yes' : 'No' }
                                         </small>
                                     </div>
                             
                                     <div>
                                         <small>
-                                            Indoor: { court.isIndoor ? 'yes' : 'no'}
+                                            Indoor: { court.isIndoor ? 'Yes' : 'No'}
                                         </small>
                                     </div>
                                     <div>
@@ -150,10 +151,6 @@ const ShowCourt = (props) => {
                                     </div> */}
                                     
                                 </Card.Text>
-                                </Col>
-                                <Col>
-                                    <Card.Img src={court.picture[0]}/>
-                                </Col>
                             </Row>
                     </Card.Body>
                     <Card.Footer>
@@ -164,11 +161,6 @@ const ShowCourt = (props) => {
                                 className='m-2' 
                                 onClick={() => setCreateModalShow(true)}>
                                 Leave a Review
-                            </Button>
-                            <Button 
-                                className='m-2' 
-                                onClick={() => setPictureModalShow(true)}>
-                                View Pictures
                             </Button>
                             <Button 
                                 className="m-2" variant="warning"
@@ -183,10 +175,20 @@ const ShowCourt = (props) => {
                         }
                     </Card.Footer>
                 </Card>
-                
+                { reviewCards }
                 </Col>
                 <Col>
+                    <div style={{width: '100%'}}>
                     <ShowMap court={court} />
+                    <div style={{backgroundImage: `url(${court.picture[0]})`, backgroundSize: "cover", height: "250px", borderRadius:'15px', border: "1px solid #AC5043"}}>
+                        <button 
+                        className='clear'
+                        onClick={() => setPictureModalShow(true)}
+                        >
+                            View all pictures
+                        </button>
+                    </div>
+                    </div>
                 </Col>
                 </Row>
             </Container>
@@ -210,6 +212,11 @@ const ShowCourt = (props) => {
                 triggerRefresh={() => setUpdated(prev => !prev)}
                 court={court}
                 />
+            <PictureModal 
+                show={pictureModalShow}
+                pictures={court.picture}
+                handleClose={() => setPictureModalShow(false)}
+            />
 
              <NewReviewModal
                 ratingAverage={ratingAverage}
