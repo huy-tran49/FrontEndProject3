@@ -5,7 +5,7 @@ import LoadingScreen from '../shared/LoadingScreen'
 import SearchBar from '../shared/SearchBar'
 import { dist } from '../shared/Distance'
 import Rating from '../shared/Rating'
-
+import { ShowRating } from '../shared/ShowRating'
 // api function from our api file
 import { getAllCourts } from '../../api/courts'
 
@@ -128,10 +128,14 @@ const CourtsIndex = (props) => {
     //     </div>
     //     )
     // }
+
+
+
     let courtCards
     const getCourtDist = () => {
         const courtDist = courts.map(court => {
         const distance = dist(lat, court.latitude, lng, court.longitude)
+
         return( {
             theCourt: court,
             milesAway: distance
@@ -142,6 +146,18 @@ const CourtsIndex = (props) => {
         let courty = courtDist.sort((a,b) => (a.milesAway > b.milesAway) ? 1 : -1)
         console.log('these are the court distances sorted', courty)
         courtCards = courtDist.map(court => {
+
+            let ratingAverage = 0
+            if (court) {
+                if (court.theCourt.rating.length > 0) {
+                    const numOfRating = court.theCourt.rating.length
+                    const ratingArr = court.theCourt.rating.map(rating=> rating.rating)
+                    const sumOfRatin = ratingArr.reduce((value, a)=> value + a, 0) 
+                    ratingAverage = sumOfRatin/numOfRating
+                    console.log('this is the rating average', ratingAverage)
+                }
+            }
+
             const distance = dist(lat, court.theCourt.latitude, lng, court.theCourt.longitude)
             console.log(`${distance} miles away`)
             console.log('this is court.latitude', court.theCourt.latitude)
@@ -156,7 +172,7 @@ const CourtsIndex = (props) => {
                         </Card.Text>
                         <Card.Text>
                             Court Rating:
-                            <Rating />
+                            <ShowRating ratingAverage={ratingAverage}/>
                         </Card.Text>
                         <Card.Text>
                             { distance.toFixed(2) } Miles Away
