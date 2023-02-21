@@ -6,10 +6,7 @@ import SearchBar from '../shared/SearchBar'
 import { dist } from '../shared/Distance'
 import Rating from '../shared/Rating'
 import { ShowRating } from '../shared/ShowRating'
-=======
 
-
->>>>>>> 1ce4569231e5950d4e2439786ad994166cfd1d8b
 // api function from our api file
 import { getAllCourts } from '../../api/courts'
 
